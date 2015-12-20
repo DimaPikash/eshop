@@ -56,4 +56,31 @@ class OrderController extends Controller
         return view('order_success', $data);
     }
     
+    public function showOrderContent(Order $order, $id)
+    {
+        $data['instance'] = $order->find($id);
+        $data['statuses'] = $data['instance']->getOrderStatuses();
+        $data['message'] = Session::get('message');
+        $data['disabled'] = $data['instance']->order_status_id == 4 ? 'disabled' : '';//4 - заказ уже отменен
+        return view('admin.ordercontent', $data);
+    }
+    
+    public function changeStatus(Request $request, Order $order, Product $product, $id)
+    {
+        $input = $request->order_status;
+        if($input == 4)//4 - отмена заказа
+        {
+            $content = $order->find($id)->content;
+            
+            foreach($content as $item)
+            {
+                $product->restIncrement($item->product_id, $item->quantity);
+            }
+            
+        }
+        $order->changeStatus($id, $input);
+        $status = $order->find($id)->status->title;
+        return redirect()->back()->with('message', "Статус заказа изменен на '$status'");
+          
+    }
 }

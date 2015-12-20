@@ -22,4 +22,6 @@ delete('delPositionFromCart', ['as'=>'delPosFromCart', 'uses'=> 'CartController@
 delete('clearCart', ['as'=>'clearCart', 'uses'=> 'CartController@clearCart']);
 post('orderform', ['as'=>'orderform', 'uses'=> 'OrderController@index']);
 post('order/save', ['as'=>'order', 'uses'=> 'OrderController@save']);
+post('changeStatus/{id}', ['uses'=>'OrderController@changeStatus']);
+
 

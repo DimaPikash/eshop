@@ -9,3 +9,4 @@ get('', [
 	}
 ]);
 
+get('order_content/{id}', ['uses'=>'\App\Http\Controllers\OrderController@showOrderContent']);

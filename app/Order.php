@@ -9,6 +9,20 @@ use App\OrderStatus;
 
 class Order extends Model
 {
+    // Метод возвращает все существующие статусы заказа
+    public function getOrderStatuses()
+    {
+        return $this->status->get();
+    }
+    
+    // Метод изменяет статус заказа
+    public function changeStatus($id, $order_status_id)
+    {
+        $order = $this->find($id);
+        $order->order_status_id = $order_status_id;
+        $order->save();
+    }
+
     public function AddOrder($array, $sumOrder)
     {
         // Добавляем к входящему массиву с данными о покупателе сумму заказа
